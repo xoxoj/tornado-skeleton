@@ -1,6 +1,6 @@
 port = 8765
 host = '127.0.0.1'
-
+timezone = 'Asia/Tokyo'
 handler_path = 'handler.' # For import: separated and ended by dot "." char
 routes = [
     # URL regex pattern, module, handler class 

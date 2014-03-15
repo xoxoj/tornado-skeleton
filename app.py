@@ -6,7 +6,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 import tornado.util
-import os.path
+import time, os, os.path
 
 # App internal
 
@@ -41,6 +41,8 @@ class IOLoop(tornado.ioloop.IOLoop):
 def main():
     tornado.options.parse_command_line()
     app = App()
+    os.environ['TZ'] = app.conf.timezone
+    time.tzset()
     server = tornado.httpserver.HTTPServer(app, xheaders=True)
     server.listen(app.conf.port, app.conf.host)
     ioloop = IOLoop.instance()
