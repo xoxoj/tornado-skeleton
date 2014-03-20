@@ -33,7 +33,7 @@ class App(tornado.web.Application):
         settings['ui_modules'] = importer('ui')
         super().__init__(handlers, **settings)
         self.conf = conf
-        self.base_path = os.path.dirname(os.path.realpath(__file__))
+        self.base_path = os.path.dirname(__file__)
         
         if self.conf.env_name != 'local':
             logging.basicConfig(filename=self.base_path + '/var/app.log')
