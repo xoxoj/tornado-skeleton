@@ -26,4 +26,4 @@ class Handler(tornado.web.RequestHandler):
                 </body></html>""" % \
                 (error, error, trace_info, request_info))
         else:
-            super(Handler, self).write_error(status_code, **kwargs)
+            super().write_error(status_code, **kwargs)

@@ -17,9 +17,9 @@ class App(tornado.web.Application):
 
     def __init__(self):
         import conf
-        conf.envName = tornado.options.options['env']
+        conf.env_name = tornado.options.options['env']
         settings = conf.env['common']
-        settings.update(conf.env[conf.envName])
+        settings.update(conf.env[conf.env_name])
         
         # Routes
         handlers = []
@@ -31,9 +31,13 @@ class App(tornado.web.Application):
                 loaded_modules[module] = importer(conf.handler_path + module)
             handlers.append((url, getattr(loaded_modules[module], handler)))
         settings['ui_modules'] = importer('ui')
-        super(App, self).__init__(handlers, **settings)
+        super().__init__(handlers, **settings)
         self.conf = conf
-        self.base_path = os.path.realpath(__file__) + '/' # App base path
+        self.base_path = os.path.dirname(os.path.realpath(__file__))
+        
+        if self.conf.env_name != 'local':
+            logging.basicConfig(filename=self.base_path + '/var/app.log')
+            logging.setLevel(logging.WARNING)
 
 class IOLoop(tornado.ioloop.IOLoop):
     pass
