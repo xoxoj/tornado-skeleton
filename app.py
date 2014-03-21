@@ -36,8 +36,7 @@ class App(tornado.web.Application):
         self.base_path = os.path.dirname(__file__)
         
         if self.conf.env_name != 'local':
-            logging.basicConfig(filename=self.base_path + '/var/app.log')
-            logging.setLevel(logging.WARNING)
+            logging.basicConfig(filename=self.base_path + '/var/app.log', level=logging.WARNING)
 
 class IOLoop(tornado.ioloop.IOLoop):
     pass
