@@ -11,12 +11,12 @@ setting = dict(
     cookie_secret='FILL_YOURS_HERE',
     xsrf_cookies=True,
     login_url='',
+    debug = True
 )
 routes = [
     # URL ("pattern", "module.Handler")
 ]
 
 # Local
-debug = True
 
 # Deploy
