@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import optparse
 import task
-from termcolor import colored
 import tornado.util
+from clint.textui import puts, colored
 
 def main():
     p = optparse.OptionParser()
@@ -11,9 +11,9 @@ def main():
         cmd = tornado.util.import_object('task.' + arguments[0])
         return cmd.execute(options, arguments)
     except ImportError:
-        print(colored('Command not found', 'red'))
+        puts(colored.red('Command not found'))
     except IndexError:
-        print(colored('Missing command argument', 'yellow'))
+        puts(colored.yellow('Missing command argument'))
         print('Available command: ')
         print(task.available())
   
