@@ -20,15 +20,19 @@ class App(tornado.web.Application):
         # Routes
         handlers = []
         loaded = {}
-        for url, module, handler in my.config.routes:
+        for url, assignee in my.config.routes:
             # Dynamic import handlers
+            (module, handler) = assignee.split('@')
             if not module in loaded:
                 loaded[module] = tornado.util.import_object('handler.' + module)
             handlers.append((url, getattr(loaded[module], handler)))
-        settings['ui_modules'] = tornado.util.import_object('ui')
-        super().__init__(handlers, **settings)
+        handlers.append((r"/static/(.*)",  tornado.web.StaticFileHandler, {"path": my.config.path + "/static"}))
+        my.config.setting.update({
+           'ui_modules': tornado.util.import_object('ui.modules')
+        })
+        super().__init__(handlers, **my.config.setting)
         self.config = my.config
-        if self.conf.env_name != 'local':
+        if not my.config.setting['debug']:
             logging.basicConfig(filename=self.base_path + '/var/app.log', level=logging.WARNING)
 
 class IOLoop(tornado.ioloop.IOLoop):
@@ -37,10 +41,10 @@ class IOLoop(tornado.ioloop.IOLoop):
 def main():
     tornado.options.parse_command_line()
     app = App()
-    os.environ['TZ'] = app.conf.timezone
+    os.environ['TZ'] = my.config.timezone
     time.tzset()
     server = tornado.httpserver.HTTPServer(app, xheaders=True)
-    server.listen(app.conf.port, app.conf.host)
+    server.listen(my.config.port, my.config.host)
     ioloop = IOLoop.instance()
     try:
         ioloop.start()

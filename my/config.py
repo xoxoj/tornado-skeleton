@@ -1,7 +1,7 @@
 import os
 import os.path
 
-path = os.path.dirname(__file__)
+path = os.path.dirname(__file__) + '/../'
 host = '127.0.0.1'
 port = 7654
 
@@ -11,12 +11,12 @@ setting = dict(
     cookie_secret='FILL_YOURS_HERE',
     xsrf_cookies=True,
     login_url='',
+    debug = True
 )
 routes = [
     # URL ("pattern", "module.Handler")
 ]
 
 # Local
-debug = True
 
 # Deploy

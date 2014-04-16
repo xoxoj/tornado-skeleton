@@ -3,19 +3,24 @@
 <head>
     <meta charset="utf-8" />
     <title>{% block title %}{% end %}</title>
-    <meta name="description" content="{% block meta_description %}{% end %}" />
-    <meta name="author" content="{% block meta_author %}{% end %}" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/main.css" />
     {% block css %}{% end %}
 </head>
 <body class="{% block body_class %}{% end %}">
-{% block body %}
-    {% block content %}
-    {% end %}
+	<div class="container">
+	      <div class="page-header">
+	        <h1>{% block title %}{% end %}</h1>
+	      </div>
+        {% block content %}{% end %}
+    </div>
     {% block javascript_library %}
+    <script src="/static/js/jquery-2.1.0.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/underscore-min.js"></script>
     <script src="/static/js/main.js"></script>
-    {{% block javascript %}{% end %}
-{% end %}
+    {% end %}
+    {% block javascript %}{% end %}
 </body>
 </html>

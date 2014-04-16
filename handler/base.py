@@ -1,10 +1,11 @@
 import tornado.web
-import lib.dbal
 
 class Handler(tornado.web.RequestHandler):
-
+    
+    db = None
+    
     def initialize(self):
-        # Instance database
+       self.db = my.db.Postgres(self.application.config.database)
         
     def set_default_headers(self):
         # For security
@@ -16,7 +17,7 @@ class Handler(tornado.web.RequestHandler):
         
     def write_error(self, status_code, **kwargs):
         import traceback
-        if self.settings.get("debug") and "exc_info" in kwargs:
+        if self.settings['debug']:
             super().write_error(status_code, **kwargs)
         else:
             self.render('error', code=status_code)
