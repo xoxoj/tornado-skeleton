@@ -7,6 +7,7 @@ import tornado.web
 import tornado.options
 import tornado.util
 import time, os, os.path
+import my.config
 
 # App internal
 
@@ -16,25 +17,17 @@ tornado.options.define("env", default='local', help="Run environment", type=str)
 class App(tornado.web.Application):
 
     def __init__(self):
-        import conf
-        conf.env_name = tornado.options.options['env']
-        settings = conf.env['common']
-        settings.update(conf.env[conf.env_name])
-        
         # Routes
         handlers = []
-        loaded_modules = {}
-        importer = tornado.util.import_object
-        for url, module, handler in conf.routes:
+        loaded = {}
+        for url, module, handler in my.config.routes:
             # Dynamic import handlers
-            if not module in loaded_modules:
-                loaded_modules[module] = importer(conf.handler_path + module)
-            handlers.append((url, getattr(loaded_modules[module], handler)))
-        settings['ui_modules'] = importer('ui')
+            if not module in loaded:
+                loaded[module] = tornado.util.import_object('handler.' + module)
+            handlers.append((url, getattr(loaded[module], handler)))
+        settings['ui_modules'] = tornado.util.import_object('ui')
         super().__init__(handlers, **settings)
-        self.conf = conf
-        self.base_path = os.path.dirname(__file__)
-        
+        self.config = my.config
         if self.conf.env_name != 'local':
             logging.basicConfig(filename=self.base_path + '/var/app.log', level=logging.WARNING)
 
