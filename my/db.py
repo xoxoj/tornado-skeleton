@@ -20,7 +20,7 @@ class DBAL:
     def query(self, sql, args = ()):
         return self._query(sql, args, fetcher='fetchall')
         
-    def query_one(self, sql, args = ())
+    def query_one(self, sql, args = ()):
         return self._query(sql, args, fetcher='fetchone')
     
     def _query(self, sql, args = (), factory=None, fetcher=None):

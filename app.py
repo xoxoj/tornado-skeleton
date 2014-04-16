@@ -20,15 +20,13 @@ class App(tornado.web.Application):
         # Routes
         handlers = []
         loaded = {}
-        for url, module, handler in my.config.routes:
+        for url, assignee in my.config.routes:
             # Dynamic import handlers
+            (module, handler) = assignee.split('@')
             if not module in loaded:
                 loaded[module] = tornado.util.import_object('handler.' + module)
             handlers.append((url, getattr(loaded[module], handler)))
-        handlers.append((r"/static/(.*)", 
-            tornado.web.StaticFileHandler,
-            {"path": my.config.path + "/static"}
-        ))
+        handlers.append((r"/static/(.*)",  tornado.web.StaticFileHandler, {"path": my.config.path + "/static"}))
         my.config.setting.update(dict(
             ui_modules = tornado.util.import_object('ui')
         ))
