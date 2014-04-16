@@ -27,9 +27,9 @@ class App(tornado.web.Application):
                 loaded[module] = tornado.util.import_object('handler.' + module)
             handlers.append((url, getattr(loaded[module], handler)))
         handlers.append((r"/static/(.*)",  tornado.web.StaticFileHandler, {"path": my.config.path + "/static"}))
-        my.config.setting.update(dict(
-            ui_modules = tornado.util.import_object('ui')
-        ))
+        my.config.setting.update({
+           'ui_modules': tornado.util.import_object('ui.modules')
+        })
         super().__init__(handlers, **my.config.setting)
         self.config = my.config
         if not my.config.setting['debug']:

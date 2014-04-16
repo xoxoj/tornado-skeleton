@@ -1,7 +1,7 @@
 import os
 import os.path
 
-path = os.path.dirname(__file__)
+path = os.path.dirname(__file__) + '/../'
 host = '127.0.0.1'
 port = 7654
 

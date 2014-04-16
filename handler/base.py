@@ -1,9 +1,11 @@
 import tornado.web
 
 class Handler(tornado.web.RequestHandler):
-
+    
+    db = None
+    
     def initialize(self):
-        # Instance database
+       self.db = my.db.Postgres(self.application.config.database)
         
     def set_default_headers(self):
         # For security
