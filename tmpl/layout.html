@@ -3,14 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <title>{% block title %}{% end %}</title>
-    <meta name="description" content="{% block meta_description %}{% end %}" />
-    <meta name="author" content="{% block meta_author %}{% end %}" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/css/main.css" />
-    {% block css %}{% end %}
 </head>
 <body class="{% block body_class %}{% end %}">
 {% block body %}
+    {% module BootstrapBase() %}
+    <style>{% block css %}{% end %}</style>
     {% block content %}
     {% end %}
     {% block javascript_library %}
