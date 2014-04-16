@@ -25,8 +25,9 @@ class App(tornado.web.Application):
             if not module in loaded:
                 loaded[module] = tornado.util.import_object('handler.' + module)
             handlers.append((url, getattr(loaded[module], handler)))
-        settings['ui_modules'] = tornado.util.import_object('ui')
-        super().__init__(handlers, **settings)
+        my.config['ui_modules'] = tornado.util.import_object('ui')
+        handlers.append((r"/static/(.*)", tornado.web.StaticFileHandler, {"path": config.path + "/static"}))
+        super().__init__(handlers, **my.config)
         self.config = my.config
         if self.conf.env_name != 'local':
             logging.basicConfig(filename=self.base_path + '/var/app.log', level=logging.WARNING)

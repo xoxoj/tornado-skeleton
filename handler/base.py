@@ -1,5 +1,4 @@
 import tornado.web
-import lib.dbal
 
 class Handler(tornado.web.RequestHandler):
 
