@@ -7,7 +7,7 @@ port = 7654
 
 timezone = 'Asia/Tokyo'
 setting = dict(
-    template_path='tmpl/',
+    template_path=path + 'tmpl/',
     cookie_secret='FILL_YOURS_HERE',
     xsrf_cookies=True,
     login_url='',

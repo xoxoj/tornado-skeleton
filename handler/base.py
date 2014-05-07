@@ -5,7 +5,7 @@ class Handler(tornado.web.RequestHandler):
     db = None
     
     def initialize(self):
-       self.db = my.db.Postgres(self.application.config.database)
+        self.db = my.db.Postgres(self.application.config.database)
         
     def set_default_headers(self):
         # For security

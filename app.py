@@ -33,7 +33,7 @@ class App(tornado.web.Application):
         super().__init__(handlers, **my.config.setting)
         self.config = my.config
         if not my.config.setting['debug']:
-            logging.basicConfig(filename=self.base_path + '/var/app.log', level=logging.WARNING)
+            logging.basicConfig(level=logging.WARNING)
 
 class IOLoop(tornado.ioloop.IOLoop):
     pass
